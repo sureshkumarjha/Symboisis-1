@@ -2,7 +2,10 @@
 import speech_recognition as sr 
 import pyaudio
 import wave
- 
+
+from googletrans import Translator
+translator = Translator()
+
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
@@ -51,8 +54,14 @@ with sr.AudioFile(AUDIO_FILE) as source:
 try: 
 	print("The audio file contains: " + r.recognize_google(audio)) 
 
+
 except sr.UnknownValueError: 
 	print("Google Speech Recognition could not understand audio") 
 
 except sr.RequestError as e: 
 	print(e) 
+print(r.recognize_google(audio),)
+s=r.recognize_google(audio) 
+z = translator.translate(s,'en') 
+print(z.text)  
+    
