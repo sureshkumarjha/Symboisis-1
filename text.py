@@ -2,17 +2,17 @@
 import speech_recognition as sr 
 import pyaudio
 import wave
-from translate import translator
 
+from googletrans import Translator
+translator = Translator()
 
- 
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
-CHUNK = 1024
-RECORD_SECONDS = 5
+CHUNK = 4*1024
+RECORD_SECONDS = 15
 WAVE_OUTPUT_FILENAME = "file.wav"
- 
+
 audio = pyaudio.PyAudio()
  
 # start Recording
@@ -41,20 +41,19 @@ waveFile.setframerate(RATE)
 waveFile.writeframes(b''.join(frames))
 waveFile.close()
 
-AUDIO_FILE = (r"file.wav") 
-
-# use the audio file as the audio source 
+AUDIO_FILE = (r"../Sam.wav") 
 
 r = sr.Recognizer() 
 
 with sr.AudioFile(AUDIO_FILE) as source: 
 	#reads the audio file. Here we use record instead of 
 	#listen 
-	audio = r.record(source) 
+	audio = r.listen(source)
 
 try: 
     
-	print("The audio file contains: " + translator('en', 'hi', r.recognize_google(audio))) 
+	print("The audio file contains: " + r.recognize_google(audio) )
+
 
 
 except sr.UnknownValueError: 
@@ -62,3 +61,7 @@ except sr.UnknownValueError:
 
 except sr.RequestError as e: 
 	print(e) 
+print(r.recognize_google(audio))
+s=r.recognize_google(audio) 
+z = translator.translate(s,'en') 
+print(z.text)  
