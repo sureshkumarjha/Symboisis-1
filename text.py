@@ -2,6 +2,9 @@
 import speech_recognition as sr 
 import pyaudio
 import wave
+from translate import translator
+
+
  
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
@@ -17,6 +20,7 @@ stream = audio.open(format=FORMAT, channels=CHANNELS,
                 rate=RATE, input=True,
                 frames_per_buffer=CHUNK)
 print("recording...")
+
 frames = []
  
 for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
@@ -49,7 +53,9 @@ with sr.AudioFile(AUDIO_FILE) as source:
 	audio = r.record(source) 
 
 try: 
-	print("The audio file contains: " + r.recognize_google(audio)) 
+    
+	print("The audio file contains: " + translator('en', 'hi', r.recognize_google(audio))) 
+
 
 except sr.UnknownValueError: 
 	print("Google Speech Recognition could not understand audio") 
