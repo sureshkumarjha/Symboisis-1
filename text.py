@@ -14,41 +14,45 @@ from nltk.corpus import wordnet
 from googletrans import Translator
 translator = Translator()
 
-FORMAT = pyaudio.paInt16
-CHANNELS = 2
-RATE = 44100
-CHUNK = 1024
-RECORD_SECONDS = 5
-WAVE_OUTPUT_FILENAME = "file.wav"
+#
+##Itta part hide karde Yeh recording ka part hai {
+#FORMAT = pyaudio.paInt16
+#CHANNELS = 2
+#RATE = 44100
+#CHUNK = 1024
+#RECORD_SECONDS = 5
+#WAVE_OUTPUT_FILENAME = "file.wav"
  
 audio = pyaudio.PyAudio()
  
-# start Recording
-stream = audio.open(format=FORMAT, channels=CHANNELS,
-                rate=RATE, input=True,
-                frames_per_buffer=CHUNK)
-print("recording...")
-frames = []
- 
-for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-    data = stream.read(CHUNK)
-    frames.append(data)
-print("finished recording")
- 
- 
-# stop Recording
-stream.stop_stream()
-stream.close()
-audio.terminate()
- 
-waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-waveFile.setnchannels(CHANNELS)
-waveFile.setsampwidth(audio.get_sample_size(FORMAT))
-waveFile.setframerate(RATE)
-waveFile.writeframes(b''.join(frames))
-waveFile.close()
+## start Recording
+#stream = audio.open(format=FORMAT, channels=CHANNELS,
+#                rate=RATE, input=True,
+#                frames_per_buffer=CHUNK)
+#print("recording...")
+#frames = []
+# 
+#for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+#    data = stream.read(CHUNK)
+#    frames.append(data)
+#print("finished recording")
+# 
+# 
+## stop Recording
+#stream.stop_stream()
+#stream.close()
+#audio.terminate()
+# 
+#waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+#waveFile.setnchannels(CHANNELS)
+#waveFile.setsampwidth(audio.get_sample_size(FORMAT))
+#waveFile.setframerate(RATE)
+#waveFile.writeframes(b''.join(frames))
+#waveFile.close()
+#
+##} Yaha tak
 
-AUDIO_FILE = (r"file.wav") 
+AUDIO_FILE = (r"Testdrivemix.wav") #Iddar qwe.wav ke jagaha file ka naam dee
 
 # use the audio file as the audio source 
 
@@ -68,7 +72,7 @@ except sr.UnknownValueError:
 
 except sr.RequestError as e: 
 	print(e) 
-print(r.recognize_google(audio),)
+print(r.recognize_google(audio))
 s=r.recognize_google(audio) 
 z = translator.translate(s,'en') 
 print(z.text)  
@@ -100,12 +104,13 @@ def cosine(vect1,vect2):
     
 
 def cl():
-    d1 = " Enquiry information on latest new or future or existing product features, price, availability, closest showroom to drop in for purchase or exchange,"
+    d1 = " Enquiry information on latest new or future or existing product features, car, cars, enquire, price, availability, closest showroom to drop in for purchase or exchange,"
     #keywords
     d3=', Calls for booking test drives, follow up calls with customers to schedule the same, confirmation that test drive has been done as per schedule or with delayed schedule '
     d2 = z.text
     documents = [d1,d3, d2]
-    print(d1,d2)
+    print(d1)
+    print(d2)
     
     LemVectorizer = CountVectorizer(tokenizer=LemNormalize, stop_words='english')
     LemVectorizer.fit_transform(documents)
